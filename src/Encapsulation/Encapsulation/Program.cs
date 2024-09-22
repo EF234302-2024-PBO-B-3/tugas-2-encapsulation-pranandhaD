@@ -3,6 +3,7 @@ using Encapsulation.Employment;
 using System;
 using Encapsulation.Calendar;
 using Encapsulation.Banking;
+using Encapsulation.Extra;
 
 namespace Encapsulation;
 
@@ -53,6 +54,48 @@ public class Program
         Console.WriteLine($"Balance after withdrawal: {account.GetBalance()}");
 
         // Extra
+        Library library = new Library();
 
+        // Add books
+        library.AddBook("978-0544003415", "The Lord of the Rings", "J.R.R. Tolkien");
+        library.AddBook("978-0061120084", "To Kill a Mockingbird", "Harper Lee");
+        library.AddBook("978-0141439518", "Pride and Prejudice", "Jane Austen");
+
+        Console.WriteLine($"\nTotal books in the library: {library.GetTotalBooks()}");
+
+        // Borrow a book
+        string isbnToBorrow = "978-0544003415";
+        if (library.BorrowBook(isbnToBorrow))
+        {
+            Console.WriteLine($"Successfully borrowed the book with ISBN: {isbnToBorrow}");
+        }
+        else
+        {
+            Console.WriteLine($"Failed to borrow the book with ISBN: {isbnToBorrow}");
+        }
+
+        // List available books
+        Console.WriteLine("\nAvailable books:");
+        foreach (var book in library.GetAvailableBooks())
+        {
+            Console.WriteLine($"- {book.Title} by {book.Author} (ISBN: {book.ISBN})");
+        }
+
+        // Return the book
+        if (library.ReturnBook(isbnToBorrow))
+        {
+            Console.WriteLine($"\nSuccessfully returned the book with ISBN: {isbnToBorrow}");
+        }
+        else
+        {
+            Console.WriteLine($"\nFailed to return the book with ISBN: {isbnToBorrow}");
+        }
+
+        // List available books again
+        Console.WriteLine("\nAvailable books after return:");
+        foreach (var book in library.GetAvailableBooks())
+        {
+            Console.WriteLine($"- {book.Title} by {book.Author} (ISBN: {book.ISBN})");
+        }
     }
 }
